@@ -1,22 +1,18 @@
-name: workflow on selfhosted runner
+name: Build nodejs application
 on: push
-jobs: 
-  job_build: 
-    runs-on: self-hosted
-    steps: 
-     - name: Checkout the code on runner VM .
-       uses: actions/checkout@v7  
-       # this action will checkout the code on the runner VM
-     - name: Install NodeJS 
-       uses: actions/setup-node@v7
-       with: 
-        node-version: '18'  # this will install nodejs version 18 on the runner VM
-     - name: Install nodejs dependencies 
-       run: npm ci  
-       # this will install all the dependencies mentioned in package.json file
-     - name: Execute test cases 
-       run: npm test  
-       continue-on-error: true
-       # this will execute all the test cases mentioned in the src folder
-     - name: Build the application 
-       run: npm run build
+jobs:
+  job_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout the code on the runner vm.
+        uses: actions/checkout@v7
+      - name: install nodejs
+        uses: actions/setup-node@v7
+        with:
+          node-version: '18'
+      - name: install nodejs dependencies
+        run: npm ci
+      - name: execute the test cases 
+        run: npm test 
+      - name: build the nodejs application
+        run: npm run build
