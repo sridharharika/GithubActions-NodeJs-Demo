@@ -1,0 +1,22 @@
+name: Build nodejs application
+on: push
+jobs:
+  job_build:
+    runs-on: self-hosted
+    steps:
+      - name: checkout the code on the runner vm.
+        uses: actions/checkout@v7
+      - name: install nodejs
+        uses: actions/setup-node@v7
+        with:
+          node-version: '18'
+      - name: install nodejs dependencies
+        run: npm ci
+      - name: execute the test cases 
+        run: npm test 
+      - name: build the nodejs application
+        run: npm run build
+      - name: fetch the build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-artifacts
